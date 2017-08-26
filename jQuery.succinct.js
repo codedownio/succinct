@@ -8,43 +8,47 @@
  */
 
  /*global jQuery*/
-(function($) {
 	'use strict';
 
-	$.fn.succinct = function(options) {
+var $ = require('jquery');
 
-		var settings = $.extend({
-				size: 240,
-				omission: '...',
-				ignore: true
-			}, options);
+$.fn.succinct = function(options) {
 
-		return this.each(function() {
+	var settings = $.extend({
+		size: 240,
+		omission: '...',
+		ignore: true
+	}, options);
 
-			var textDefault,
-				textTruncated,
-				elements = $(this),
-				regex    = /[!-\/:-@\[-`{-~]$/,
-				init     = function() {
-					elements.each(function() {
-						textDefault = $(this).html();
+	return this.each(function() {
 
-						if (textDefault.length > settings.size) {
-							textTruncated = $.trim(textDefault)
-											.substring(0, settings.size)
-											.split(' ')
-											.slice(0, -1)
-											.join(' ');
+		var textDefault,
+			textTruncated,
+			elements = $(this),
+			regex    = /[!-\/:-@\[-`{-~]$/,
+			init     = function() {
+				elements.each(function() {
+					textDefault = this.originalHTML || $(this).html();
 
-							if (settings.ignore) {
-								textTruncated = textTruncated.replace(regex, '');
-							}
+                    if (!this.originalHTML) this.originalHTML = textDefault;
 
-							$(this).html(textTruncated + settings.omission);
+					if (textDefault.length > settings.size) {
+						textTruncated = $.trim(textDefault)
+							.substring(0, settings.size)
+							.split(' ')
+							.slice(0, -1)
+							.join(' ');
+
+						if (settings.ignore) {
+							textTruncated = textTruncated.replace(regex, '');
 						}
-					});
-				};
-			init();
-		});
-	};
-})(jQuery);
+
+						$(this).html(textTruncated + settings.omission);
+					} else {
+                        $(this).html(textDefault);
+                    }
+				});
+			};
+		init();
+	});
+};
