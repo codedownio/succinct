@@ -1,0 +1,17 @@
+{
+    "name": "succinct",
+    "version": "1.1.0",
+    "main": "jQuery.succinct.js",
+    "license": "MIT",
+    "keywords": [],
+    "homepage": "http://mikeking.io/succinct/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/micjamking/succinct"
+    },
+    "author": {
+        "name" : "Mike King",
+        "url" : "http://mikeking.io/"
+    },
+    "devDependencies": {}
+}
